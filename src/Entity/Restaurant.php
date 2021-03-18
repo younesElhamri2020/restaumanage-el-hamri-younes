@@ -30,9 +30,10 @@ class Restaurant
     private $description;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(name="created_at",type="date",options={"default": "CURRENT_TIMESTAMP"})
      */
     private $created_at;
+
 
     /**
      * @ORM\ManyToOne(targetEntity=City::class, inversedBy="restaurants")
