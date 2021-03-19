@@ -19,6 +19,38 @@ class RestaurantRepository extends ServiceEntityRepository
         parent::__construct($registry, Restaurant::class);
     }
 
+    /**
+     * @param $restaurant
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+
+    public function store($restaurant){
+        $entityManager = $this->getEntityManager();
+        $entityManager->persist($restaurant);
+        $entityManager->flush();
+
+
+    }
+
+
+    public function  edit_restaurant($restaurant)
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->flush();
+    }
+    public function deleterestaurant($restaurant)
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->remove($restaurant);
+        $entityManager->flush();
+    }
+
+
+
+
+
+
     // /**
     //  * @return Restaurant[] Returns an array of Restaurant objects
     //  */
