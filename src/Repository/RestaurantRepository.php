@@ -14,16 +14,13 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class RestaurantRepository extends ServiceEntityRepository
 {
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Restaurant::class);
     }
 
-    /**
-     * @param $restaurant
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
+
 
     public function store($restaurant){
         $entityManager = $this->getEntityManager();
@@ -32,6 +29,7 @@ class RestaurantRepository extends ServiceEntityRepository
 
 
     }
+
 
 
     public function  edit_restaurant($restaurant)

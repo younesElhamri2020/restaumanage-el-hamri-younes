@@ -19,6 +19,29 @@ class CityRepository extends ServiceEntityRepository
         parent::__construct($registry, City::class);
     }
 
+
+
+    public function storeCity($city){
+        $entityManager = $this->getEntityManager();
+        $entityManager->persist($city);
+        $entityManager->flush();
+
+
+    }
+
+    public function  edit_city($city)
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->flush();
+    }
+    public function delete_city($city)
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->remove($city);
+        $entityManager->flush();
+    }
+
+
     // /**
     //  * @return City[] Returns an array of City objects
     //  */

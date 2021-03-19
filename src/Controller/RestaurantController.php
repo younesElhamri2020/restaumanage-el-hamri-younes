@@ -40,7 +40,7 @@ class RestaurantController extends AbstractController
         ]);
     }
     /**
-     * @Route("/rastaurant", name="restaurant.ajouter", methods={"GET","POST"})
+     * @Route("/restaurant", name="restaurant.ajouter", methods={"GET","POST"})
      */
     public function ajouter(Request $request):Response
     {
@@ -92,6 +92,14 @@ class RestaurantController extends AbstractController
         // delete object
         $this->restaurantRepository->deleterestaurant($restaurant);
         return $this->redirectToRoute('restaurant');
+    }
+
+    /**
+     * @Route("/restaurant/{id}", name="restaurant_show")
+     */
+    public function show_city($id){
+        $restaurant=$this -> getDoctrine()->getRepository(Post::class)->find($id);
+        return $this->render('city/show.html.twig',['restaurant' => $restaurant]);
     }
 
 
