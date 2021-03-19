@@ -44,7 +44,7 @@ class CityController extends AbstractController
             //redirect to index
             return $this->redirectToRoute('city');
         }
-        return $this->render("restaurant/form-ajoutcity.html.twig");
+        return $this->render("city/form-ajoutcity.html.twig");
 
     }
     /**
@@ -94,7 +94,7 @@ class CityController extends AbstractController
      * @Route("/show/{id}", name="city_show")
      */
     public function show_city($id){
-        $city=$this -> getDoctrine()->getRepository(Post::class)->find($id);
+        $city=$this -> getDoctrine()->getRepository(City::class)->find($id);
         return $this->render('city/show.html.twig',['city' => $city]);
     }
 

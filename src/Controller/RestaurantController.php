@@ -33,7 +33,7 @@ class RestaurantController extends AbstractController
     /**
      * @Route("/nouveau_restaurant", name="nouveauRestaurant")
      */
-    public function ajouterRsetaurant(): Response
+    public function ajouterRestaurant(): Response
     {
         return $this->render('restaurant/nouveauRestaurant.html.twig', [
             'controller_name' => 'RestaurantController',
