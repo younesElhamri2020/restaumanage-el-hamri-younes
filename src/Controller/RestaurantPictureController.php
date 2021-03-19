@@ -88,7 +88,6 @@ class RestaurantPictureController extends AbstractController
 
     /**
      * @Route("/restaurantpicture/delete/{id}")
-     * @Method({"DELETE"})
      */
     public function delete(Request $request, $id) {
         //find the object to delete

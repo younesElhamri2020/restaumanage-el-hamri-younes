@@ -81,7 +81,6 @@ class CityController extends AbstractController
 
     /**
      * @Route("/city/delete/{id}")
-     * @Method({"DELETE"})
      */
     public function deleteCity(Request $request, $id) {
         //find the object to delete

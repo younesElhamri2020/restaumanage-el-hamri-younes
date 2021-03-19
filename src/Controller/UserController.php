@@ -85,7 +85,6 @@ class UserController extends AbstractController
 
         /**
          * @Route("/user/delete/{id}")
-         * @Method({"DELETE"})
          */
         public function deleteUser(Request $request, $id) {
         //find the object to delete

@@ -76,7 +76,6 @@ class ReviwController extends AbstractController
     }
     /**
      * @Route("/reviews/delete/{id}")
-     * @Method({"DELETE"})
      */
     public function deleteReview(Request $request, $id) {
         //find the object to delete
