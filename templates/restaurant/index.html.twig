@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AnimalController!{% endblock %}
+{% block title %}Hello RestaurantController!{% endblock %}
 
 {% block body %}
 
 
     <div class="container">
-        <h1>projet les restaurants</h1><hr>
+        <h1> La liste des restaurants</h1><hr>
 
         <div class="my-3">
             <a class="btn btn-left btn-success" href="#" role="button">Nouveau </a>
@@ -26,16 +26,16 @@
             </tr>
             </thead>
             <tbody>
-            {% for rstaurant in restaurants %}
+            {% for restaurant in restaurants %}
                 <tr>
 
-                    <td>{{ rstaurant.name }}</td>
-                    <td>{{ rstaurant.description }}</td>
-                    <td>{{ rstaurant.getCreatedAt() | date}}</td>
-                    <td>{{ rstaurant.getCityId().getName()}}</td>
+                    <td>{{ restaurant.name }}</td>
+                    <td>{{ restaurant.description }}</td>
+                    <td>{{ restaurant.getCreatedAt() | date}}</td>
+                    <td>{{ restaurant.getCityId().getName()}}</td>
                     <td>
                         <a class="btn btn-primary" href="#" role="button">Edit</a>
-                        <a class="btn btn-danger"   href="#" role="button">Delete</a>
+                        <a class="btn btn-danger"   href="{{ path('restaurant.delete',{'id':restaurant.id})}}" role="button">Delete</a>
                     </td>
                 </tr>
             {% endfor %}

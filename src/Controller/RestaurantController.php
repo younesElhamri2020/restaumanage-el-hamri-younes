@@ -83,7 +83,7 @@ class RestaurantController extends AbstractController
     }
 
     /**
-     * @Route("/restaurant/delete/{id}")
+     * @Route("/restaurant/delete/{id}" ,name="restaurant.delete")
      */
     public function delete(Request $request, $id) {
         //find the object to delete
@@ -96,7 +96,7 @@ class RestaurantController extends AbstractController
     /**
      * @Route("/restaurant/{id}", name="restaurant_show")
      */
-    public function show_city($id){
+    public function show_restaurant($id){
         $restaurant=$this -> getDoctrine()->getRepository(Post::class)->find($id);
         return $this->render('city/show.html.twig',['restaurant' => $restaurant]);
     }
