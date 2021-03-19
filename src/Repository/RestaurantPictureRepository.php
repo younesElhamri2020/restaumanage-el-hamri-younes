@@ -19,6 +19,30 @@ class RestaurantPictureRepository extends ServiceEntityRepository
         parent::__construct($registry, RestaurantPicture::class);
     }
 
+
+    public function storeRestaurantPicture($restaurantPicture){
+        $entityManager = $this->getEntityManager();
+        $entityManager->persist($restaurantPicture);
+        $entityManager->flush();
+
+
+    }
+
+
+
+    public function  edit_RestaurantPicture($restaurantPicture)
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->flush();
+    }
+    public function deleteRestaurantPicture($restaurantPicture)
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->remove($restaurantPicture);
+        $entityManager->flush();
+    }
+
+
     // /**
     //  * @return RestaurantPicture[] Returns an array of RestaurantPicture objects
     //  */

@@ -8,6 +8,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class RestaurantPictureController extends AbstractController
 {
+  private $restaurantPictureRepository;
+    public function __construct(RestaurantPictureController $restaurantPictureRepository)
+    {
+        $this->restaurantPictureRepository=$restaurantPictureRepository;
+
+    }
     /**
      * @Route("/restaurant/picture", name="restaurant_picture")
      */
