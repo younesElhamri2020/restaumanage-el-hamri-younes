@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AnimalController!{% endblock %}
+
+{% block body %}
+
+
+    <div class="container">
+        <h1>projet les restaurants</h1><hr>
+
+        <div class="my-3">
+            <a class="btn btn-left btn-success" href="#" role="button">Nouveau </a>
+            <a class="btn btn-left btn-danger"   href="#" role="button">Supprimmer tout</a>
+        </div>
+
+
+        <table class="table">
+            <thead>
+            <tr>
+
+                <th>Name</th>
+                <th>Description</th>
+                <th>Create_at</th>
+                <th>City</th>
+                <th>action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for rstaurant in restaurants %}
+                <tr>
+
+                    <td>{{ rstaurant.name }}</td>
+                    <td>{{ rstaurant.description }}</td>
+                    <td>{{ rstaurant.getCreatedAt() | date}}</td>
+                    <td>{{ rstaurant.getCityId().getName()}}</td>
+                    <td>
+                        <a class="btn btn-primary" href="#" role="button">Edit</a>
+                        <a class="btn btn-danger"   href="#" role="button">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+
+
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+{% endblock %}

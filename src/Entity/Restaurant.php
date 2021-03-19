@@ -30,7 +30,7 @@ class Restaurant
     private $description;
 
     /**
-     * @ORM\Column(name="created_at",type="date",options={"default": "CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="created_at",type="datetime",options={"default": "CURRENT_TIMESTAMP"})
      */
     private $created_at;
 
