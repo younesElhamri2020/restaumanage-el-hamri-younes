@@ -19,6 +19,12 @@ final class Version20210318150943 extends AbstractMigration
 
     public function up(Schema $schema) : void
     {
+        $file = 'scripte/datarestau.sql';
+        $querys = file($file, FILE_IGNORE_NEW_LINES);
+        foreach($querys as $query){
+            $this->addSql($query);
+        }
+
         // this up() migration is auto-generated, please modify it to your needs
 
     }

@@ -19,6 +19,7 @@ final class Version20210318150102 extends AbstractMigration
 
     public function up(Schema $schema) : void
     {
+
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE restaurant CHANGE created_at created_at DATE DEFAULT \'CURRENT_TIMESTAMP\' NOT NULL');
         $this->addSql('ALTER TABLE review CHANGE created_at created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL');
