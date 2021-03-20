@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+use App\Repository\CityRepository;
 use App\Repository\RestaurantRepository;
 use App\Entity\Restaurant;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,11 +14,13 @@ class RestaurantController extends AbstractController
 
 
     private $restaurantRepository;
+    private $cityRepository;
 
 
-    public function __construct(RestaurantRepository $restaurantRepository)
+    public function __construct(RestaurantRepository $restaurantRepository,CityRepository $cityRepository )
     {
         $this->restaurantRepository=$restaurantRepository;
+        $this->cityRepository=$cityRepository;
 
     }
     /**
@@ -30,15 +33,7 @@ class RestaurantController extends AbstractController
             'restaurants' =>  $restaurants
         ]);
     }
-    /**
-     * @Route("/nouveau_restaurant", name="nouveauRestaurant")
-     */
-    public function ajouterRestaurant(): Response
-    {
-        return $this->render('restaurant/nouveauRestaurant.html.twig', [
-            'controller_name' => 'RestaurantController',
-        ]);
-    }
+
     /**
      * @Route("/restaurant", name="restaurant.ajouter", methods={"GET","POST"})
      */
@@ -49,16 +44,20 @@ class RestaurantController extends AbstractController
             $restaurant = new Restaurant();
             $restaurant->setName($request->get('name'));
             $restaurant->setDescription($request->get('description'));
-            $restaurant->setCityId($request->get('city'));
+            $restaurant->setCreatedAt(new \DateTime());
+            $restaurant->setCityId($this->cityRepository->find($request->get('city')));
 
 
             $this->restaurantRepository->store($restaurant);
 
             //redirect to index
             return $this->redirectToRoute('restaurant');
+        }else {
+             $citys=$this->cityRepository->findAll();
+            return $this->render("restaurant/ajoutrestaurant.html.twig",[
+              'citys'=>$citys
+            ]);
         }
-        return $this->render("restaurant/form-ajoutrestaurant.html.twig");
-
     }
     /**
      * @Route("/editrestaurant/{id}", name="restaurant.edit", methods={"GET","POST"})
@@ -78,7 +77,7 @@ class RestaurantController extends AbstractController
             $this->restaurantRepository->edit_restaurant($restaurant);
             return $this->redirectToRoute('restaurant');
         }else{
-            return $this->render("restaurant/form-editrestaurant.html.twig");
+            return $this->render("restaurant/edit-restaurant.html.twig");
         }
     }
 

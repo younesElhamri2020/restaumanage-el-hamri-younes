@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello RestaurantController!{% endblock %}
+
+{% block body %}
+    <style>
+        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    </style>
+
+    <div class="example-wrapper">
+        <h1>AJouter un nouveau Restaurant</h1>
+
+        <form action="{{ path('restaurant.ajouter') }}" method="post">
+
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" name="name"  placeholder="Entrer le name ">
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <input type="text" class="form-control" name="description"  placeholder="Entrer le nom">
+            </div>
+
+
+
+            <div class="form-group">
+                <label for="city">Choose a City</label>
+                <select name="city" class="form-control" required>
+                    {% for city in citys %}
+                    <option value="{{ city.id }}">{{ city.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="float-right">
+                <a class="btn btn-secondary" href="/" role="button">Back to Index</a>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </form>
+
+    </div>
+{% endblock %}

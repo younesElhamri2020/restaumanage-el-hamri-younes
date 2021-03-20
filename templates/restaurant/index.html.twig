@@ -34,7 +34,7 @@
                     <td>{{ restaurant.getCreatedAt() | date}}</td>
                     <td>{{ restaurant.getCityId().getName()}}</td>
                     <td>
-                        <a class="btn btn-primary" href="#" role="button">Edit</a>
+                        <a class="btn btn-primary" href="{{ path('restaurant.edit',{'id':restaurant.id})}}" role="button">Edit</a>
                         <a class="btn btn-danger"   href="{{ path('restaurant.delete',{'id':restaurant.id})}}" role="button">Delete</a>
                     </td>
                 </tr>
