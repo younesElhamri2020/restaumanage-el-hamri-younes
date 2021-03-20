@@ -110,9 +110,9 @@ class RestaurantController extends AbstractController
     }
 
     /**
-     * @Route("/listetoixrestaurant", name="res")
+     * @Route("/Requetes", name="req")
      */
-    public function listetoixrestaurant(){
+    public function Requetes(){
 
         $listsTroixdernierR=$this->restaurantRepository->listeTroixdernierRestaurant();
 
