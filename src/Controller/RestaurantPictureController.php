@@ -64,7 +64,7 @@ class RestaurantPictureController extends AbstractController
 
 
     /**
-     * @Route("/editrestaurant/{id}", name="restaurant.edit", methods={"GET","POST"})
+     * @Route("/editrestaurantp/{id}", name="restaurantp.edit", methods={"GET","POST"})
      */
     public function editRestaurantP(Request $request,$id): Response
     {

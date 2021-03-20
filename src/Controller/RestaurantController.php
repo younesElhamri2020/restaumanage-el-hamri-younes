@@ -70,14 +70,20 @@ class RestaurantController extends AbstractController
             $restaurant=new Restaurant();
             $restaurant = $this->getDoctrine()->getRepository(Restaurant::class)->find($id);
             // les information de modifier
-            $restaurant->setDescription($request->get('description'));
             $restaurant->setName($request->get('name'));
-            $restaurant->setCityId($request->get('city'));
+            $restaurant->setDescription($request->get('description'));
+            $restaurant->setCityId($this->cityRepository->find($request->get('city')));
             // modifier le restaurant dans la base de données
             $this->restaurantRepository->edit_restaurant($restaurant);
             return $this->redirectToRoute('restaurant');
         }else{
-            return $this->render("restaurant/edit-restaurant.html.twig");
+            $restaurant=$this -> getDoctrine()->getRepository(Restaurant::class)->find($id);
+            $citys=$this->cityRepository->findAll();
+            return $this->render("restaurant/edit-restaurant.html.twig",[
+                     'restaurant'=>$restaurant,
+                    'citys'=>$citys
+                ]
+            );
         }
     }
 
