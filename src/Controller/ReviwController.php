@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Review;
+use App\Repository\RestaurantRepository;
 use App\Repository\ReviewRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,10 +15,13 @@ class ReviwController extends AbstractController
 {
 
     private $reviewRepository;
-    public function __construct(ReviewRepository $reviewRepository)
+    private $restaurantRepository;
+    private $userRepository;
+    public function __construct(ReviewRepository $reviewRepository,RestaurantRepository $restaurantRepository,UserRepository $userRepository)
     {
         $this->reviewRepository=$reviewRepository;
-
+        $this->restaurantRepository=$restaurantRepository;
+        $this->userRepository =$userRepository;
     }
     /**
      * @Route("/reviws", name="reviw")
@@ -47,8 +52,14 @@ class ReviwController extends AbstractController
             //redirect to index
             return $this->redirectToRoute('reviews');
         }
-        return $this->render("review/form-ajoutreview.html.twig");
-
+        else {
+            $users=$this->userRepository->findAll();
+            $retaurants=$this->restaurantRepository->findAll();
+            return $this->render("review/form-ajoutreview.html.twig",[
+                'users'=>$users,
+                'retaurants'=>$retaurants
+            ]);
+        }
     }
 
     /**
@@ -71,7 +82,14 @@ class ReviwController extends AbstractController
             $this->reviewRepository->edit_review($review);
             return $this->redirectToRoute('review');
         }else{
-            return $this->render("review/form-editreview.html.twig");
+            $review=$this -> getDoctrine()->getRepository(Review::class)->find($id);
+            $users=$this->userRepository->findAll();
+            $retaurants=$this->restaurantRepository->findAll();
+            return $this->render("review/edit-review.html.twig",[
+                'review'=>$review,
+                'users'=>$users,
+                'retaurants'=>$retaurants
+            ]);
         }
     }
     /**
@@ -83,16 +101,6 @@ class ReviwController extends AbstractController
         // delete object
         $this->reviewRepository->delete_review($review);
         return $this->redirectToRoute('review');
-    }
-
-    /**
-     * @Route("/nouveau_review", name="nouveauReview")
-     */
-    public function nouveauReview(): Response
-    {
-        return $this->render('review/nouveauReview.html.twig', [
-            'controller_name' => 'ReviewController',
-        ]);
     }
 
     /**

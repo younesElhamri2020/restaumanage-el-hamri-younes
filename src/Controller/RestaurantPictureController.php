@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\RestaurantPicture;
 use App\Repository\RestaurantPictureRepository;
+use App\Repository\RestaurantRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,9 +13,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class RestaurantPictureController extends AbstractController
 {
   private $restaurantPictureRepository;
-    public function __construct(RestaurantPictureRepository $restaurantPictureRepository)
+  private $restaurantRepository;
+    public function __construct(RestaurantPictureRepository $restaurantPictureRepository,RestaurantRepository $restaurantRepository)
     {
+
         $this->restaurantPictureRepository=$restaurantPictureRepository;
+        $this->restaurantRepository=$restaurantRepository;
 
     }
     /**
@@ -24,19 +28,11 @@ class RestaurantPictureController extends AbstractController
     {
         $restaurantPictures=$this->restaurantPictureRepository->findAll();
         return $this->render('restaurantpicture/index.html.twig', [
-            '$restaurantPictures' =>  $restaurantPictures
+            'restaurantPictures' =>  $restaurantPictures
         ]);
     }
 
-    /**
-     * @Route("/nouveau_restaurant_picture", name="nouveauRestaurantPicture")
-     */
-    public function ajouterRestaurantP(): Response
-    {
-        return $this->render('restaurantpicture/nouveauRestaurantPicture.html.twig', [
-            'controller_name' => 'RestaurantPictureController',
-        ]);
-    }
+
 
 
     /**
@@ -56,9 +52,12 @@ class RestaurantPictureController extends AbstractController
 
             //redirect to index
             return $this->redirectToRoute('restaurant_picture');
+        }else {
+            $restaurants=$this->restaurantRepository->findAll();
+            return $this->render("restaurantpicture/ajout-restaurant_picture.html.twig",[
+                'restaurants'=>$restaurants
+                ]);
         }
-        return $this->render("restaurantpicture/form-ajoutrestaurant_picture.html.twig");
-
     }
 
 
@@ -80,18 +79,20 @@ class RestaurantPictureController extends AbstractController
             $this->restaurantPictureRepository->edit_RestaurantPicture($restaurantpicture);
             return $this->redirectToRoute('restaurant_picture');
         }else{
-            return $this->render("restaurantpicture/form-editrestaurant_picture.html.twig");
+            $restaurantpicture=$this -> getDoctrine()->getRepository(RestaurantPicture::class)->find($id);
+            $restaurants=$this->restaurantRepository->findAll();
+            return $this->render("restaurantpicture/edit-restaurant_picture.html.twig");
         }
     }
 
 
 
     /**
-     * @Route("/restaurantpicture/delete/{id}")
+     * @Route("/restaurantpicture/delete/{id}",name="restaurantpicture")
      */
     public function delete(Request $request, $id) {
         //find the object to delete
-        $restaurantpicture = $this->getDoctrine()->getRepository(Restaurant::class)->find($id);
+        $restaurantpicture = $this->getDoctrine()->getRepository(RestaurantPicture::class)->find($id);
         // delete object
         $this->restaurantPictureRepository->deleteRestaurantPicture($restaurantpicture);
         return $this->redirectToRoute('restaurant_picture');

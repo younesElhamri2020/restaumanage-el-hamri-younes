@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\CityRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,19 +14,20 @@ class UserController extends AbstractController
 {
 
     private $userRepository;
-    public function __construct(UserRepository $userRepository)
+    private $cityRepository;
+    public function __construct(UserRepository $userRepository,CityRepository $cityRepository)
     {
         $this->userRepository =$userRepository;
-
+        $this->cityRepository=$cityRepository;
     }
     /**
-     * @Route("/user", name="user")
+     * @Route("/users", name="user")
      */
     public function index(): Response
     {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/UserController.php',
+        $users=$this->userRepository->findAll();
+        return $this->render('user/index.html.twig', [
+            'users' =>  $users
         ]);
     }
 
@@ -46,20 +48,15 @@ class UserController extends AbstractController
 
             //redirect to index
             return $this->redirectToRoute('user');
+        }else {
+            $citys=$this->cityRepository->findAll();
+            return $this->render("user/ajout-user.html.twig",[
+                'citys'=>$citys
+            ]);
         }
-        return $this->render("user/form-ajoutuser.html.twig");
-
     }
 
-    /**
-     * @Route("/nouveau_user", name="nouveauUser")
-     */
-    public function nouveauUser(): Response
-    {
-        return $this->render('user/nouveauUser.html.twig', [
-            'controller_name' => 'UserController',
-        ]);
-    }
+
 
     /**
      * @Route("/edituser/{id}", name="user.edit", methods={"GET","POST"})
@@ -79,7 +76,12 @@ class UserController extends AbstractController
             $this->userRepository->edit_User($user);
             return $this->redirectToRoute('user');
         } else {
-            return $this->render("user/form-edituser.html.twig");
+            $user=$this -> getDoctrine()->getRepository(User::class)->find($id);
+            $citys=$this->cityRepository->findAll();
+            return $this->render("user/edit-user.html.twig",[
+                'user'=>$user,
+                'citys'=>$citys
+            ]);
         }
     }
 
@@ -99,7 +101,9 @@ class UserController extends AbstractController
      */
     public function show_user($id){
         $user=$this -> getDoctrine()->getRepository(User::class)->find($id);
-        return $this->render('city/show.html.twig',['user' => $user]);
+        return $this->render('city/show.html.twig',[
+            'user' => $user
+        ]);
     }
 
 
