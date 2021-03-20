@@ -1,0 +1,158 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello RestaurantController!{% endblock %}
+
+{% block body %}
+
+    <section>
+    <div class="container">
+        <h1> Afficher les 3 derniers restaurants créés</h1><hr>
+
+
+        <table class="table table-success table-striped">
+            <thead>
+            <tr>
+
+                <th>Name</th>
+                <th>Description</th>
+                <th>Create_at</th>
+                <th>City</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for restaurant in listsTroixdernierR %}
+                <tr>
+
+                    <td>{{ restaurant.name }}</td>
+                    <td>{{ restaurant.description }}</td>
+                    <td>{{ restaurant.getCreatedAt() | date}}</td>
+                    <td>{{ restaurant.getCityId().getName()}}</td>
+
+                </tr>
+            {% endfor %}
+
+
+            </tbody>
+        </table>
+
+    </div>
+
+    </section>
+
+    <section>
+        <div class="container">
+            <h1>Afficher la valeur moyenne de la note d'un restaurant</h1><hr>
+
+
+            <table class="table table-striped table-dark">
+                <thead>
+                <tr>
+
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Create_at</th>
+                    <th>City</th>
+                    <th>moyenne</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for restaurantmoyenne in restaurantavecleurmoyenne %}
+                    <tr>
+
+                        <td>{{ restaurantmoyenne.restaurant.name }}</td>
+                        <td>{{ restaurantmoyenne.restaurant.description }}</td>
+                        <td>{{ restaurantmoyenne.restaurant.getCreatedAt() | date}}</td>
+                        <td>{{ restaurantmoyenne.restaurant.getCityId().getName()}}</td>
+                        <td>{{restaurantmoyenne.moyenne}} </td>
+
+                    </tr>
+                {% endfor %}
+
+
+                </tbody>
+            </table>
+
+        </div>
+
+    </section>
+    <section>
+        <div class="container">
+            <h1> Afficher les 2 top meilleurs restaurants</h1><hr>
+
+
+            <table class="table table-success table-striped">
+                <thead class="thead-dark">
+                <tr>
+
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Create_at</th>
+                    <th>City</th>
+                    <th>moyenne</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for toprestaurantavecmoyenne in topRestau %}
+                    <tr>
+
+                        <td>{{ toprestaurantavecmoyenne.restaurant.name }}</td>
+                        <td>{{ toprestaurantavecmoyenne.restaurant.description }}</td>
+                        <td>{{ toprestaurantavecmoyenne.restaurant.getCreatedAt() | date}}</td>
+                        <td>{{ toprestaurantavecmoyenne.restaurant.getCityId().getName()}}</td>
+                        <td>{{toprestaurantavecmoyenne.moyenne}} </td>
+
+                    </tr>
+                {% endfor %}
+
+
+                </tbody>
+            </table>
+
+        </div>
+
+    </section>
+    <section>
+        <div class="container">
+            <h1> Lister les restaurants et leurs détails</h1><hr>
+
+
+            <table  class="table table-dark">
+                <thead>
+                <tr>
+
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Create_at</th>
+                    <th>Rating</th>
+                    <th>message</th>
+                    <th>username</th>
+
+
+                </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+
+                        <td>{{   listDetaileRestaurant.name }}</td>
+                        <td>{{   listDetaileRestaurant.description }}</td>
+                        <td>{{   listDetaileRestaurant.created_at | date}}</td>
+                        <td>{{   listDetaileRestaurant.rating}}</td>
+                        <td>{{   listDetaileRestaurant.message}}</td>
+                        <td>{{   listDetaileRestaurant.username}}</td>
+
+                    </tr>
+
+
+
+                </tbody>
+            </table>
+
+        </div>
+
+    </section>
+
+{% endblock %}

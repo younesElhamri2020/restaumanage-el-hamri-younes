@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Review;
+use App\Entity\Restaurant;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -37,6 +38,9 @@ class ReviewRepository extends ServiceEntityRepository
         $entityManager->remove($review);
         $entityManager->flush();
     }
+
+
+
 
     // /**
     //  * @return Review[] Returns an array of Review objects

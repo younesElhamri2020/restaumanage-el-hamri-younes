@@ -9,13 +9,12 @@
         <h1> La liste des restaurants</h1><hr>
 
         <div class="my-3">
-            <a class="btn btn-left btn-success" href="#" role="button">Nouveau </a>
-            <a class="btn btn-left btn-danger"   href="#" role="button">Supprimmer tout</a>
+            <a class="btn btn-left btn-success" href="{{ path('restaurant.ajouter')}}" role="button">Nouveau </a>
         </div>
 
 
-        <table class="table">
-            <thead>
+        <table  class="table table-success table-striped">
+            <thead class="thead-dark">
             <tr>
 
                 <th>Name</th>

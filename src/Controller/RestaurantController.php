@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Controller;
+use App\Entity\City;
 use App\Repository\CityRepository;
 use App\Repository\RestaurantRepository;
 use App\Entity\Restaurant;
+use App\Repository\ReviewRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,12 +17,13 @@ class RestaurantController extends AbstractController
 
     private $restaurantRepository;
     private $cityRepository;
+    private $reviewRepository;
 
-
-    public function __construct(RestaurantRepository $restaurantRepository,CityRepository $cityRepository )
+    public function __construct(RestaurantRepository $restaurantRepository,CityRepository $cityRepository,ReviewRepository $reviewRepository)
     {
         $this->restaurantRepository=$restaurantRepository;
         $this->cityRepository=$cityRepository;
+        $this->reviewRepository=$reviewRepository;
 
     }
     /**
@@ -106,6 +109,34 @@ class RestaurantController extends AbstractController
         return $this->render('city/show.html.twig',['restaurant' => $restaurant]);
     }
 
+    /**
+     * @Route("/listetoixrestaurant", name="res")
+     */
+    public function listetoixrestaurant(){
+
+        $listsTroixdernierR=$this->restaurantRepository->listeTroixdernierRestaurant();
+
+        $moyen=$this->restaurantRepository->moyenne();
+        $topRestau=$this->restaurantRepository->topRestau();
+
+        $restaurants = $this->getDoctrine()->getRepository(Restaurant::class)->findAll();
+        $listDetaileRestaurant=$this->restaurantRepository->listDetaileRestaurant($restaurants[1]->getId());
+        $city=$this->getDoctrine()->getRepository(City::class)->find($restaurants[1]->getCityId());
+
+
+      //  dd($moyen);
+
+        return $this->render('Requetes.html.twig',[
+           'listsTroixdernierR'=>$listsTroixdernierR,
+            'restaurantavecleurmoyenne'=>$moyen,
+            'topRestau'=>$topRestau,
+
+            'restaurants'=> $restaurants,
+            'city'=>$city,
+            'listDetaileRestaurant'=>$listDetaileRestaurant[0]
+
+        ]);
+    }
 
 
 
